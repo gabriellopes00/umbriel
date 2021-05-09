@@ -50,4 +50,16 @@ export class PrismaRecipientsRepository implements IRecipientsRepository {
 
     await prisma.event.createMany({ data: eventsData })
   }
+
+  async findManyByContactId(contactId: string): Promise<Event[]> {
+    const data = await prisma.recipient.findMany({
+      where: {
+        contact_id: contactId,
+      },
+      include: {
+        message: true,
+        events: true,
+      },
+    })
+  }
 }
