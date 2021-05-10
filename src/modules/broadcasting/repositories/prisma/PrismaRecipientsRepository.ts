@@ -1,6 +1,10 @@
 import { prisma } from '@infra/prisma/client'
 import { Recipient } from '@modules/broadcasting/domain/recipient/recipient'
 import { EventMapper } from '@modules/broadcasting/mappers/EventMapper'
+import {
+  RecipientDetails,
+  RecipientDetailsMapper,
+} from '@modules/broadcasting/mappers/RecipientDetailsMapper'
 import { RecipientMapper } from '@modules/broadcasting/mappers/RecipientMapper'
 
 import {
@@ -51,7 +55,9 @@ export class PrismaRecipientsRepository implements IRecipientsRepository {
     await prisma.event.createMany({ data: eventsData })
   }
 
-  async findManyByContactId(contactId: string): Promise<Event[]> {
+  async getRecipientsDetailsByContactId(
+    contactId: string
+  ): Promise<RecipientDetails[]> {
     const data = await prisma.recipient.findMany({
       where: {
         contact_id: contactId,
@@ -61,5 +67,7 @@ export class PrismaRecipientsRepository implements IRecipientsRepository {
         events: true,
       },
     })
+
+    return data.map(recipient => RecipientDetailsMapper.toDomain(recipient))
   }
 }

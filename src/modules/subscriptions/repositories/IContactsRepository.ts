@@ -9,7 +9,6 @@ export type ContactsSearchParams = {
 export interface IContactsRepository {
   exists(email: string): Promise<boolean>
   findById(id: string): Promise<Contact>
-  findByIdWithDetails(id: string): Promise<Contact>
   findByEmail(email: string): Promise<Contact>
   search(params: ContactsSearchParams): Promise<Contact[]>
   findByTagsIds(tagIds: string[]): Promise<Contact[]>

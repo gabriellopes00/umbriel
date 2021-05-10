@@ -36,3 +36,4 @@
 - [ ] Invite member
 - [ ] Permissions & Roles
 - [ ] Metrics & Graphs
+- [ ] Seeds
